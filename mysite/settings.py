@@ -17,6 +17,7 @@ from os import path
 BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR2=path.dirname(path.dirname(__file__))
 TEMPLATE_DIR=path.join(BASE_DIR2,'templates')
+STATIC_DIR=path.join(BASE_DIR2,'static')
 
 
 
@@ -121,6 +122,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS=[
+    STATIC_DIR,
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
