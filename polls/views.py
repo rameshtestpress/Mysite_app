@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.shortcuts import get_object_or_404, render,HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse
@@ -10,11 +11,18 @@ class IndexView(generic.ListView):
     template_name = "polls/index.html"
     context_object_name = "latest_question_list"
 
-    queryset = Question.objects.order_by("-pub_date")[:5]
-
+    def get_queryset(self):
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[
+            :5
+        ]
 class DetailView(generic.DetailView):
     model = Question
+    queryset=IndexView.queryset
     template_name = "polls/details.html"
+    
+    def get_queryset(self):
+       
+        return Question.objects.filter(pub_date__lte=timezone.now())
 
 
 class ResultsView(generic.DetailView):
